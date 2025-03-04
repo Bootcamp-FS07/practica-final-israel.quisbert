@@ -1,0 +1,24 @@
+<mat-card *ngFor="let post of posts" class="post-card">
+  <mat-card-subtitle>{{ post.author }}</mat-card-subtitle>
+  <mat-card-content>
+    <p>Text: {{ post.text }}</p>
+    <div *ngIf="comments.length > 0" class="comments-section">
+      <mat-divider></mat-divider>
+      Comments
+      <mat-card *ngFor="let comment of comments" class="comment-card">
+        <p class="comment-text">
+          {{ comment.text }}
+          <mat-icon class="comment-button" (click)="editComment()">edit</mat-icon>
+        </p>
+      </mat-card>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="actions-posts-container">
+    <button mat-button (click)="addComment()">Comment</button>
+  </mat-card-actions>
+</mat-card>
+
+<button mat-fab extended class="fab-button" (click)="createPost()">
+  <mat-icon>add</mat-icon>
+  New Post
+</button>
