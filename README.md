@@ -1,5 +1,7 @@
 # Practica Final - Israel Quisbert
 
+Hosted in [Firebase!](https://practica-final--final-fe-460b9.us-central1.hosted.app/)
+
 ## Folder Explanation
 
 1. **`core/`**: Contains application-wide singleton services (e.g., `AuthService`, `ApiService`), models, and utilities. This folder is loaded once and remains in memory throughout the app's lifecycle.
