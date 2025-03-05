@@ -25,4 +25,15 @@ export class CommentService {
     return this.http.get<Comment[]>(url, {params});
   }
 
+  updateComment(commentId: string, text: string, author: string, post: string): Observable<any> {
+    const url = `${this.apiUrl}/${this.endpoint}/${commentId}`;
+    const body = { text, author, post };
+    return this.http.patch(url, body);
+  }
+
+  deleteComment(commentId: string): Observable<any>{
+    const url = `${this.apiUrl}/${this.endpoint}/${commentId}`;
+    return this.http.delete(url);
+  }
+
 }

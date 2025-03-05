@@ -10,13 +10,16 @@
         <p class="comment-author">{{comment.author.username}} at {{comment.updatedAt}}</p>
         <p class="comment-text">
           {{ comment.text }}
-          <mat-icon class="comment-button" (click)="editComment(comment._id, comment.text)">edit</mat-icon>
+          <mat-icon *ngIf="userId === comment.author._id" class="comment-button" (click)="editComment(comment._id, comment.text, post._id)">edit</mat-icon>
+          <mat-icon *ngIf="userId === comment.author._id" class="delete-comment" (click)="deleteComment(comment._id)">delete</mat-icon>
         </p>
       </mat-card>
     </div>
   </mat-card-content>
   <mat-card-actions class="actions-posts-container">
     <button mat-button (click)="addComment(post._id)">Comment</button>
+    <button *ngIf="userId === post.author._id" mat-button (click)="editPost(post._id, post.text)">Edit</button>
+    <button *ngIf="userId === post.author._id" mat-button (click)="deletePost(post._id)">Delete</button>
   </mat-card-actions>
 </mat-card>
 

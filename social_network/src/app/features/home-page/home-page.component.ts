@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, model, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  model,
+  OnInit,
+  OnChanges,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +21,7 @@ import { Post } from '../../models/post.model';
 import { UserService } from '../../core/services/user/user.service';
 import { CommentService } from '../../core/services/comment/comment.service';
 import { Comment } from '../../models/comment.model';
+import { ConfigmDialogComponent } from '../../shared/components/configm-dialog/configm-dialog.component';
 export interface DialogData {
   animal: string;
   name: string;
@@ -38,6 +46,8 @@ export interface DialogData {
 export class HomePageComponent implements OnInit {
   posts: Post[] = [];
   comments: Comment[] = [];
+  userId = localStorage.getItem('userId');
+
   readonly dialog = inject(MatDialog);
 
   constructor(
@@ -47,18 +57,21 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getUserProfile().subscribe({
-      next: response => {
-        console.log(response);
-      },
-      error: error => {
-        console.log(error);
-      },
-    });
+    this.loadUserData();
     this.loadPosts();
   }
 
-  loadPosts(){
+  loadUserData() {
+    this.userService.userId$.subscribe(userId => {
+      console.log('User ID actualizado:', userId);
+    });
+    this.userService.getUserProfile().subscribe({
+      next: profile => console.log('Perfil cargado:', profile),
+      error: err => console.error('Error al cargar perfil:', err),
+    });
+  }
+
+  loadPosts() {
     this.postService.getposts().subscribe({
       next: response => {
         this.posts = response;
@@ -100,7 +113,7 @@ export class HomePageComponent implements OnInit {
 
   addComment(postId: string) {
     const dialogRef = this.dialog.open(ModalComponent, {
-      data: { is_comment: true, id: postId },
+      data: { is_comment: true, post_id: postId },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -111,9 +124,15 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  editComment(commentId: string, commentText: string) {
+  editComment(commentId: string, commentText: string, postId: string) {
     const dialogRef = this.dialog.open(ModalComponent, {
-      data: { is_comment: true, text: commentText, id: commentId },
+      data: {
+        is_comment: true,
+        text: commentText,
+        comment_id: commentId,
+        post_id: postId,
+        is_an_update: true,
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -124,15 +143,64 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  editPost() {
+  editPost(postId: string, postText: string) {
     const dialogRef = this.dialog.open(ModalComponent, {
-      data: { is_comment: false },
+      data: {
+        is_comment: false,
+        is_an_update: true,
+        post_id: postId,
+        text: postText,
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.loadPosts();
       if (result !== undefined) {
         console.log(result);
+      }
+    });
+  }
+
+  deleteComment(commentId: string) {
+    const dialogRef = this.dialog.open(ConfigmDialogComponent, {
+      data: {
+        message: '¿Estás seguro de que deseas eliminar este comentario?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.commentService.deleteComment(commentId).subscribe({
+          next: () => {
+            console.log('Comentario eliminado con éxito');
+            this.loadPosts();
+          },
+          error: error => {
+            console.error('Error eliminando comentario', error);
+          },
+        });
+      }
+    });
+  }
+
+  deletePost(postId: string) {
+    const dialogRef = this.dialog.open(ConfigmDialogComponent, {
+      data: {
+        message: '¿Estás seguro de que deseas eliminar este comentario?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.postService.deletePost(postId).subscribe({
+          next: () => {
+            console.log('Comentario eliminado con éxito');
+            this.loadPosts();
+          },
+          error: error => {
+            console.error('Error eliminando comentario', error);
+          },
+        });
       }
     });
   }

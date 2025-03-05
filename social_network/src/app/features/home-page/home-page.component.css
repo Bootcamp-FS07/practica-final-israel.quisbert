@@ -74,7 +74,7 @@ mat-card-subtitle {
   padding: 8px;
 }
 
-.comment-button{
+.delete-comment{
   position: absolute;
   bottom: 5px;
   right: 5px;
@@ -87,9 +87,23 @@ mat-card-subtitle {
   color: #007bff;
 }
 
+.comment-button{
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.delete-comment:hover {
+  color: #007bff;
+}
+
 .comment-author{
   margin: 0;
   font-size: 14px;
   color: #000000;
   text-align: left;
+  font-weight: 500;
 }

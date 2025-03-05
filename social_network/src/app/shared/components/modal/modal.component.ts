@@ -10,8 +10,9 @@ import { CommentService } from '../../../core/services/comment/comment.service';
 import { CommonModule } from '@angular/common';
 
 export interface DialogData {
-  id: string;
+  comment_id: string;
   text: string;
+  post_id: string;
   is_comment: boolean;
   is_an_update: boolean;
 }
@@ -48,9 +49,21 @@ export class ModalComponent {
     if (this.data.is_comment) {
       if (this.userId !== null) {
         if (this.data.is_an_update) {
+          this.commentService
+            .updateComment(this.data.comment_id,this.data.text, this.userId, this.data.post_id)
+            .subscribe({
+              next: response => {
+                console.log(response);
+                this.dialogRef.close();
+              },
+              error: error => {
+                console.log(error);
+                this.dialogRef.close();
+              },
+            });
         } else {
           this.commentService
-            .addComment(this.data.text, this.userId, this.data.id)
+            .addComment(this.data.text, this.userId, this.data.post_id)
             .subscribe({
               next: response => {
                 console.log(response);
@@ -68,6 +81,16 @@ export class ModalComponent {
     } else {
       if (this.userId !== null) {
         if (this.data.is_an_update) {
+          this.postService.updatePost(this.data.post_id, this.data.text, this.userId).subscribe({
+            next: response => {
+              console.log(response);
+              this.dialogRef.close();
+            },
+            error: error => {
+              console.log(error);
+              this.dialogRef.close();
+            },
+          })
         } else {
           this.postService.createPost(this.data.text, this.userId).subscribe({
             next: response => {

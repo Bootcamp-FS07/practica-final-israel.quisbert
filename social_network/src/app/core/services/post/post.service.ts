@@ -24,4 +24,15 @@ export class PostService {
     return this.http.post(url,body);
   }
 
+  updatePost(postId: string, text: string, author: string): Observable<any> {
+    const url = `${this.apiUrl}/${this.endpoint}/${postId}`;
+    const body = { text, author };
+    return this.http.patch(url, body);
+  }
+
+  deletePost(postId: string): Observable<any>{
+    const url = `${this.apiUrl}/${this.endpoint}/${postId}`;
+    return this.http.delete(url);
+  }
+
 }
