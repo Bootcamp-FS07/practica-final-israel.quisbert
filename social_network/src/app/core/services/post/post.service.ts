@@ -18,4 +18,10 @@ export class PostService {
     return this.http.get<Post[]>(url);
   }
 
+  createPost(text: string, author: string): Observable<any>{
+    const url = `${this.apiUrl}/${this.endpoint}`;
+    const body = { text, author };
+    return this.http.post(url,body);
+  }
+
 }

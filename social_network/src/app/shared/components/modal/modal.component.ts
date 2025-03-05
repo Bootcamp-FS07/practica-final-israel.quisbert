@@ -3,12 +3,17 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PostService } from '../../../core/services/post/post.service';
+import { CommentService } from '../../../core/services/comment/comment.service';
+import { CommonModule } from '@angular/common';
 
 export interface DialogData {
-  animal: string;
-  name: string;
+  id: string;
+  text: string;
+  is_comment: boolean;
+  is_an_update: boolean;
 }
 
 @Component({
@@ -20,19 +25,64 @@ export interface DialogData {
     MatButtonModule,
     MatDialogModule,
     MatDialogModule,
+    CommonModule,
   ],
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css'
+  styleUrl: './modal.component.css',
 })
 export class ModalComponent {
-  //readonly dialogRef = Inject(MatDialogRef<ModalComponent>);
+  readonly dialogRef = inject(MatDialogRef<ModalComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  readonly animal = model(this.data.animal);  
+  userId = localStorage.getItem('userId');
 
-  onNoClick(){
-    //this.dialogRef.close();
+  constructor(
+    private postService: PostService,
+    private commentService: CommentService
+  ) {}
+
+  onNoClick() {
+    this.dialogRef.close();
   }
-  onOkClick(){
 
+  onOkClick() {
+    if (this.data.is_comment) {
+      if (this.userId !== null) {
+        if (this.data.is_an_update) {
+        } else {
+          this.commentService
+            .addComment(this.data.text, this.userId, this.data.id)
+            .subscribe({
+              next: response => {
+                console.log(response);
+                this.dialogRef.close();
+              },
+              error: error => {
+                console.log(error);
+                this.dialogRef.close();
+              },
+            });
+        }
+      } else {
+        console.log('Usuario no autenticado');
+      }
+    } else {
+      if (this.userId !== null) {
+        if (this.data.is_an_update) {
+        } else {
+          this.postService.createPost(this.data.text, this.userId).subscribe({
+            next: response => {
+              console.log(response);
+              this.dialogRef.close();
+            },
+            error: error => {
+              console.log(error);
+              this.dialogRef.close();
+            },
+          });
+        }
+      } else {
+        console.log('Usuario no autenticado');
+      }
+    }
   }
 }

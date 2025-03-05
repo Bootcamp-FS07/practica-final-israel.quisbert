@@ -86,3 +86,10 @@ mat-card-subtitle {
 .comment-button:hover {
   color: #007bff;
 }
+
+.comment-author{
+  margin: 0;
+  font-size: 14px;
+  color: #000000;
+  text-align: left;
+}

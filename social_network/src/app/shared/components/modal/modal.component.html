@@ -1,12 +1,18 @@
-<h2 mat-dialog-title>{{data.name}}</h2>
+<h2 mat-dialog-title>
+  <ng-container *ngIf="data.is_comment; else notComment">
+    Comment
+  </ng-container>
+  <ng-template #notComment>
+    Post
+  </ng-template>
+</h2>
 <mat-dialog-content>
-  <p>What's your favorite animal?</p>
   <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput [(ngModel)]="animal" />
+    <mat-label>What are you thinking?</mat-label>
+    <input matInput [(ngModel)]="data.text" />
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="onOkClick()" cdkFocusInitial>Save</button>
+  <button mat-button (click)="onOkClick()" cdkFocusInitial>Save</button>
 </mat-dialog-actions>
