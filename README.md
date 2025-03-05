@@ -1,4 +1,4 @@
-# practica-final-israel.quisbert
+# Practica Final - Israel Quisbert
 
 ## Folder Explanation
 
@@ -17,8 +17,6 @@ cp src/environments/environment.development.sample.ts src/environments/environme
 ```
 
 ## Install dependencies
-
-Use nodejs 22.12.0 (LTS) to install dependencies (`nvm use 22.12.0`)
 
 ```bash
 npm install
