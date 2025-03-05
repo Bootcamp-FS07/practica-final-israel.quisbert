@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, model } from '@angular/core';
+import { Component, inject, signal, model, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-
+import { PostService } from '../../core/services/post/post.service';
+import { Post } from '../../models/post.model';
 export interface DialogData {
   animal: string;
   name: string;
@@ -31,39 +32,22 @@ export interface DialogData {
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
-export class HomePageComponent {
-  posts = [
-    {
-      id: 1,
-      author: 'Simon',
-      text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
-    },
-    {
-      id: 2,
-      author: 'Isra',
-      text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
-    },
-    {
-      id: 3,
-      author: 'Marce',
-      text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
-    },
-    {
-      id: 4,
-      author: 'Jorgo',
-      text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
-    },
-    {
-      id: 4,
-      author: 'Jorgo',
-      text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
-    },
-    {
-      id: 4,
-      author: 'Jorgo',
-      text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
-    },
-  ];
+export class HomePageComponent implements OnInit{
+  posts: Post[] = [];
+
+  constructor(private postService: PostService){}
+
+  ngOnInit(): void {
+    this.postService.getposts().subscribe({
+      next: (response) => {
+        this.posts = response;
+        console.log(this.posts)
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
 
   comments = [
     {

@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-
+import { AuthService } from '../../../core/services/auth/auth.service';
 @Component({
   selector: 'app-layout',
   imports: [ 
@@ -29,6 +29,8 @@ export class LayoutComponent {
   showFiller = false;
   router = inject(Router);
 
+  constructor(private authService: AuthService){}
+
   redirectHome() {
     this.router.navigate(['']);
   }
@@ -37,4 +39,8 @@ export class LayoutComponent {
     this.router.navigate(['profile']);
   }
   
+  logout(){
+    this.authService.logout();
+  }
+
 }

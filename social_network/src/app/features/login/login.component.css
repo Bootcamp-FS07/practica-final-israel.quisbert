@@ -54,3 +54,7 @@
 .register a:hover {
   text-decoration: underline;
 }
+
+.register-a{
+  cursor: pointer;
+}

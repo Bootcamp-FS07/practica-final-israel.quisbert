@@ -1,7 +1,8 @@
 <mat-card *ngFor="let post of posts" class="post-card">
-  <mat-card-subtitle>{{ post.author }}</mat-card-subtitle>
+  <mat-card-subtitle>A post from: {{ post.author.username }}</mat-card-subtitle>
   <mat-card-content>
-    <p>Text: {{ post.text }}</p>
+    <p>{{post.createdAt}}</p>
+    <p>{{post.text}}</p>
     <div *ngIf="comments.length > 0" class="comments-section">
       <mat-divider></mat-divider>
       Comments

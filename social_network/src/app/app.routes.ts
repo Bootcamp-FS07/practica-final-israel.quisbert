@@ -4,6 +4,7 @@ import { LayoutComponent } from './shared/components/layout/layout.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { RegisterComponent } from './features/register/register.component';
 import { ProfileComponent } from './features/profile/profile.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent},
@@ -15,5 +16,6 @@ export const routes: Routes = [
             { path: '', component: HomePageComponent},
             { path: 'profile', component: ProfileComponent},
         ]
+        , canActivate: [AuthGuard]
     }
 ];
