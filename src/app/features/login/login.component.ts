@@ -12,7 +12,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   selector: 'app-login',
   imports: [FormsModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatDialogModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   username = '';

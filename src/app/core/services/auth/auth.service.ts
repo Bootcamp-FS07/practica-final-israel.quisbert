@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { SignupResponse } from '../../../models/signup.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +15,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  createNewUser(username: string, password: string): Observable<any> {
+  createNewUser(username: string, password: string): Observable<SignupResponse> {
     const url = `${this.apiUrl}/${this.endpoint}/signup`;
     const body = { username, password };
-    return this.http.post(url, body);
+    return this.http.post<SignupResponse>(url, body);
   }
 
   login(

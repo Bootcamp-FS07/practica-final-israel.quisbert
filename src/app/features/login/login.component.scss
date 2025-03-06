@@ -1,9 +1,11 @@
+@import '../../../assets/styles/variables.scss';
+
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-color: white;
 }
 
 .login-card {
@@ -27,18 +29,18 @@
 .input-group label {
   display: block;
   margin-bottom: 0.3rem;
-  color: #333;
+  color: $text-color;
 }
 
 .input-group input {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid $group-input;
   border-radius: 5px;
 }
 
 .input-group input:focus {
-  border-color: #007bff;
+  border-color: $primary-color;
   outline: none;
 }
 
@@ -47,7 +49,7 @@
 }
 
 .register a {
-  color: #007bff;
+  color: $primary-color;
   text-decoration: none;
 }
 
