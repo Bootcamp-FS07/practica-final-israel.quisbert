@@ -1,0 +1,43 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <h2 class="title">Create New User</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="username"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password_verification">Verify Password</label>
+        <input
+          type="password"
+          id="password_verification"
+          name="password_verification"
+          [(ngModel)]="password_verification"
+          required
+        />
+      </div>
+
+      <button mat-raised-button color="primary" type="submit">
+        Register
+      </button>
+    </form>
+  </mat-card>
+</div>

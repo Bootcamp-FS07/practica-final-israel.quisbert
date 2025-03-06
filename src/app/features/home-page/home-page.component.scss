@@ -1,0 +1,91 @@
+@import '../../../assets/styles/variables.scss';
+
+
+.fab-button {
+  position: fixed;
+  bottom: 30px;
+  right: 50px;
+}
+
+.new-post-card {
+  padding: 20px;
+}
+
+.post-card {
+  width: 100%;
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+}
+
+.post-card p {
+  margin: 0;
+  font-size: 14px;
+  color: $post-card-color;
+  text-align: left;
+}
+
+mat-card-subtitle {
+  padding-left: 15px;
+}
+
+.comment-card{
+  border-radius: 1px;
+  padding: 10px;
+  margin-top: 5px;
+  position: relative;
+}
+
+.comments-section{
+  width: 100%;
+  margin-top: 10px;
+}
+
+.actions-posts-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+}
+
+.delete-comment{
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.comment-button:hover {
+  color: $primary-color;
+}
+
+.comment-button{
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.delete-comment:hover {
+  color: $primary-color;
+}
+
+.comment-author{
+  margin: 0;
+  font-size: 14px;
+  color: black;
+  text-align: left;
+  font-weight: 500;
+}
