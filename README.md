@@ -1,6 +1,10 @@
 # Practica Final - Israel Quisbert
 
-Hosted in [Firebase!](https://practica-final--final-fe-460b9.us-central1.hosted.app/)
+Hosted in [Firebase!](https://practica-final--final-fe-460b9.us-central1.hosted.app/) right now a deploy it's automated for each commit pushed to develop branch
+
+The backend is hosted in [Render](https://combi-social-server.onrender.com/api#)
+
+The data base is hosted in Cloud Mongo DB Atlas
 
 ## Folder Explanation
 

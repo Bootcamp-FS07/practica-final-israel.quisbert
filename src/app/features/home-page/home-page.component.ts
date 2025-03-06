@@ -75,7 +75,6 @@ export class HomePageComponent implements OnInit {
     this.postService.getposts().subscribe({
       next: response => {
         this.posts = response;
-        console.log(this.posts);
         this.posts.forEach(post => {
           this.loadComments(post);
         });
@@ -90,7 +89,6 @@ export class HomePageComponent implements OnInit {
     this.commentService.getPostComments(post._id).subscribe({
       next: (comments: Comment[]) => {
         post.comments = comments;
-        console.log('Comments for post', post._id, comments);
       },
       error: error => {
         console.log('Error loading comments:', error);
@@ -172,7 +170,6 @@ export class HomePageComponent implements OnInit {
       if (result) {
         this.commentService.deleteComment(commentId).subscribe({
           next: () => {
-            console.log('Comentario eliminado con éxito');
             this.loadPosts();
           },
           error: error => {
@@ -194,7 +191,6 @@ export class HomePageComponent implements OnInit {
       if (result) {
         this.postService.deletePost(postId).subscribe({
           next: () => {
-            console.log('Comentario eliminado con éxito');
             this.loadPosts();
           },
           error: error => {

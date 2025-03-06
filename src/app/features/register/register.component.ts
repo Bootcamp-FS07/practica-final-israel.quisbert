@@ -30,7 +30,6 @@ export class RegisterComponent {
     this.authService.createNewUser(this.username,this.password).subscribe({
       next: (response) =>{
         this.openDialog('Éxito', 'Usuario creado exitosamente.');
-        console.log(response);
         this.redirectLogin();
       },
       error: (error) => {

@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PostService } from '../../../core/services/post/post.service';
 import { CommentService } from '../../../core/services/comment/comment.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 export interface DialogData {
   comment_id: string;
@@ -35,6 +36,7 @@ export class ModalComponent {
   readonly dialogRef = inject(MatDialogRef<ModalComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   userId = localStorage.getItem('userId');
+  router = inject(Router);
 
   constructor(
     private postService: PostService,
@@ -53,11 +55,9 @@ export class ModalComponent {
             .updateComment(this.data.comment_id,this.data.text, this.userId, this.data.post_id)
             .subscribe({
               next: response => {
-                console.log(response);
                 this.dialogRef.close();
               },
               error: error => {
-                console.log(error);
                 this.dialogRef.close();
               },
             });
@@ -66,45 +66,41 @@ export class ModalComponent {
             .addComment(this.data.text, this.userId, this.data.post_id)
             .subscribe({
               next: response => {
-                console.log(response);
                 this.dialogRef.close();
               },
               error: error => {
-                console.log(error);
                 this.dialogRef.close();
               },
             });
         }
-      } else {
-        console.log('Usuario no autenticado');
+      } else {        
+        this.dialogRef.close();
+        this.router.navigate(['/login']);
       }
     } else {
       if (this.userId !== null) {
         if (this.data.is_an_update) {
           this.postService.updatePost(this.data.post_id, this.data.text, this.userId).subscribe({
             next: response => {
-              console.log(response);
               this.dialogRef.close();
             },
             error: error => {
-              console.log(error);
               this.dialogRef.close();
             },
           })
         } else {
           this.postService.createPost(this.data.text, this.userId).subscribe({
             next: response => {
-              console.log(response);
               this.dialogRef.close();
             },
             error: error => {
-              console.log(error);
               this.dialogRef.close();
             },
           });
         }
       } else {
-        console.log('Usuario no autenticado');
+        this.dialogRef.close();
+        this.router.navigate(['/login']);
       }
     }
   }

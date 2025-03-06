@@ -24,7 +24,6 @@ export class LoginComponent {
   onSubmit() {
     this.authService.login(this.username,this.password).subscribe({
       next: (response) =>{
-        console.log(response);
         this.redirectHome();        
       },
       error: (error) => {
